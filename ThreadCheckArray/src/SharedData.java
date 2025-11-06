@@ -1,27 +1,29 @@
+import java.util.ArrayList;
+
 public class SharedData 
 {
-	private int [] array;
-	private boolean [] winArray;
+	private ArrayList<Integer> array;
+	private ArrayList<Boolean> winArray;
 	private boolean flag;
 	private final int b;
 	
-	public SharedData(int[] array, int b) {
+	public SharedData(ArrayList<Integer> array, int b) {
 		
-		this.array = array;
+		array = new ArrayList<Integer>();
 		this.b = b;
 	}
 
-	public boolean[] getWinArray() 
+	public ArrayList<Boolean> getWinArray() 
 	{
 		return winArray;
 	}
 
-	public void setWinArray(boolean [] winArray) 
+	public void setWinArray(ArrayList<Boolean> winArray) 
 	{
 		this.winArray = winArray;
 	}
 
-	public int[] getArray() 
+	public ArrayList<Integer> getArray() 
 	{
 		return array;
 	}
