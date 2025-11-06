@@ -1,9 +1,20 @@
 import java.util.ArrayList;
 
+/**
+ * Class ThreadCheckArray 
+ * Will manage threads
+ */
+
 public class ThreadCheckArray implements Runnable 
 {
+	/**
+	 * flag - Turn true if there's numbers that sums to wanted sum
+	 * winArray - Result array
+	 * sd - Shared Data of threads
+	 * array - Original user's array copy
+	 */
 	private boolean flag;
-	private ArrayList<Boolean> winArray;
+	private boolean[] winArray;
 	SharedData sd;
 	ArrayList<Integer> array;
 	int b;
@@ -16,7 +27,7 @@ public class ThreadCheckArray implements Runnable
 			array = sd.getArray();
 			b = sd.getB();
 		}		
-		winArray = new ArrayList<Boolean>(array.size());
+		winArray = new boolean[array.size()];
 	}
 	
 	void rec(int n, int b)
@@ -37,13 +48,13 @@ public class ThreadCheckArray implements Runnable
 				}			
 			}
 			if (b == array.get(n-1))
-				winArray.set(n-1, true);
+				winArray[n-1] = true;
 			return;
 		}
 		
 		rec(n-1, b - array.get(n-1));
 		if (flag)
-			winArray.set(n-1, true);
+			winArray[n-1] = true;
 		synchronized (sd) 
 		{
 			if (sd.getFlag())
@@ -61,7 +72,7 @@ public class ThreadCheckArray implements Runnable
 		if (array.size() == 1)
 			if (b == array.get(0) && !flag)
 			{
-				winArray.set(0, true);
+				winArray[0] = true;
 				flag = true;
 				synchronized (sd) 
 				{
@@ -71,7 +82,7 @@ public class ThreadCheckArray implements Runnable
 		if (flag)
 		{
 			if (Thread.currentThread().getName().equals("thread1"))
-				winArray.set(array.size() - 1, true);
+				winArray[array.size() - 1] = true;
 			synchronized (sd) 
 			{
 				sd.setWinArray(winArray);
